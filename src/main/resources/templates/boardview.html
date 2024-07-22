@@ -2,72 +2,13 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시글 보기</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .content {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .buttons {
-            display: flex;
-            justify-content: flex-end;
-        }
-        .buttons button {
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-left: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        .buttons button.edit {
-            background: #5cb85c;
-        }
-        .buttons button.delete {
-            background: #DC3545;
-        }
-    </style>
+    <title>게시글 상세페이지</title>
 </head>
-
 <body>
-<div class="container">
-    <div class="title" th:text="${board.title}">게시글 제목</div>
-    <div class="content" th:text="${board.content}">
-        여기에 게시글 내용이 표시됩니다.
-    </div>
-    <div class="buttons">
-        <button class="edit" th:onclick="'location.href=\'/board/modify/' + ${board.id} + '\''">수정</button>
-        <button class="delete" onclick="deletePost()">삭제</button>
-    </div>
-</div>
-
-<script>
-    function deletePost() {
-        if (confirm('정말 삭제하시겠습니까?')) {
-            location.href = '/board/delete/' + [[${board.id}]];
-        }
-    }
-</script>
+<h1 th:text = "${board.title}">제목입니다</h1>
+<p th:text = "${board.content}">내용이 들어갈 부분입니다.</p>
+<a th:href = "@{${board.filepath}}">다운받기</a>
+<a th:href = "@{/board/delete(id=${board.id})}">글삭제</a>
+<a th:href = "@{/board/modify/{id}(id=${board.id})}">글수정</a>
 </body>
 </html>
