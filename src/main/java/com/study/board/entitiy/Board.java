@@ -9,10 +9,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Data
+@Data //get 메소드 사용할 수 있게 하는 어도테이션
 public class Board {
 
-    @Id
+    @Id //기본키를 의미
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

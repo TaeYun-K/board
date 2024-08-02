@@ -3,6 +3,8 @@ package com.study.board.service;
 import com.study.board.entitiy.Board;
 import com.study.board.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,12 +35,14 @@ public class BoardService {
         board.setFilename(fileName);
 
         boardRepository.save(board);
+        //controller에서 보내준 board 데이터를 받아와서
+        // autowired 된 boardRepository의 jpaRepository 메소드를 사용하여 save한다.
     }
 
     // 게시판 리스트 처리
-    public List<Board> BoardList() {
+    public Page<Board> boardList(Pageable pageable) {
 
-        return boardRepository.findAll();
+        return boardRepository.findAll(pageable); //controller에서 요청한 board 데이터를 보내줌
     }
 
     // 특정 게시글 불러오기

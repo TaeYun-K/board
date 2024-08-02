@@ -5,6 +5,10 @@ import com.study.board.service.BoardService;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +25,10 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/board/write")
+    @GetMapping("/board/write") //해당 주소로 요청되었을 때 boardwrite 라는 html을 보여준다
     public String boardWriteForm() {
         return "boardwrite";
-    }
+    } //따움표 안은 어떤 HTML 파일로 보내줄 것인지
 
 
     @PostMapping("/board/writepro")
@@ -37,9 +41,19 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList(Model model) {
+    public String boardList(Model model, @PageableDefault(page = 0, size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        model.addAttribute("list",boardService.BoardList());
+        Page<Board> list = boardService.boardList(pageable); //service에서 받아온 board 데이터를 list라는 변수에 저장함
+
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage-4,1);
+        int endPage = Math.min(nowPage+5,list.getTotalPages());
+
+        model.addAttribute("list",list); //list라는 변수에 저장된 값을 boardlist.html로 보내줌
+        model.addAttribute("nowPage",nowPage);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+
         return "boardlist";
     }
 
