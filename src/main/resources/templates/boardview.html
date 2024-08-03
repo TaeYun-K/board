@@ -65,6 +65,8 @@
     function deletePost() {
         if (confirm('정말 삭제하시겠습니까?')) {
             location.href = '/board/delete?id=[[${board.id}]]';
+            <!--문자열로 전송하기 때문에 [[~~~~]] 처럼 대괄호로 묶어서 전송해줘야 한다.-->
+
         }
     }
 </script>

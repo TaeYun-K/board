@@ -42,17 +42,20 @@ public class BoardService {
     // 게시판 리스트 처리
     public Page<Board> boardList(Pageable pageable) {
 
-        return boardRepository.findAll(pageable); //controller에서 요청한 board 데이터를 보내줌
+        return boardRepository.findAll(pageable);
+        //controller에서 요청한 board 데이터를 보내줌
     }
 
     // 특정 게시글 불러오기
     public Board boardview(Integer id) {
 
         return boardRepository.findById(id).get();
+        //JPA의 메소드인 findById 는 optional 객체로 .get() 함수를 써야지 실체값을 받아올 수 있다.
     }
 
     // 특정 게시글 삭제
     public void boardDelete(Integer id) {
+        //리턴값이 필요없기 때문에 void
 
         boardRepository.deleteById(id);
     }

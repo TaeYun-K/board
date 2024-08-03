@@ -59,6 +59,7 @@ public class BoardController {
 
     @GetMapping("/board/view")
     public String boardview(Model model, Integer id) {
+        //localhost8080://board/view?id=1 로 하였을 때 id 값을 넘겨줌
 
         model.addAttribute("board",boardService.boardview(id));
         return "boardview";
@@ -72,7 +73,7 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    @GetMapping("/board/modify/{id}")
+    @GetMapping("/board/modify/{id}") //pathvariable 어도테이션을 써서 url의 id 값을 받아옴
     public String boardModify(@PathVariable("id") Integer id, Model model) {
 
         model.addAttribute("board",boardService.boardview(id));
@@ -82,7 +83,7 @@ public class BoardController {
     @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, MultipartFile file) throws Exception{
 
-        Board boardTemp = boardService.boardview(id);
+        Board boardTemp = boardService.boardview(id); //받아온 id 값에 해당하는 기존 데이터(title, content) 에 접근할 수 있다.
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
 
